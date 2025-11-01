@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,6 +28,7 @@ public class FormPokedex extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    ArrayList<Pokemon> pokemon = new ArrayList<>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -70,13 +72,16 @@ public class FormPokedex extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(request.getParameter("nombre")!=null || request.getParameter("tipo")!=null ||request.getParameter("numero")!=null ||request.getParameter("url")!=null ){
+        if (request.getParameter("nombre") != null || request.getParameter("tipo") != null || request.getParameter("numero") != null || request.getParameter("url") != null) {
             getServletContext().setAttribute("Error", "Llene todos los campos");
             response.sendRedirect("/index.jsp");
-        }else{
-            Pokemon[] lista = (new Pokemon(request.getParameter("nombre"), request.getParameter("numero"),request.getParameter("tipo"), request.getParameter("url")));
+        } else {
+            Pokemon nuevo = new Pokemon(request.getParameter("nombre"), request.getParameter("numero"), request.getParameter("tipo"), request.getParameter("url"));
+            pokemon.add(nuevo);
+            request.setAttribute("Pokemon", pokemon);
+            getServletContext().getRequestDispatcher("/pokedex.jsp").forward(request, response);
         }
-       }
+    }
 
     /**
      * Returns a short description of the servlet.

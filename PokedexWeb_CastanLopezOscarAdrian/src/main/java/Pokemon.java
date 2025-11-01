@@ -45,6 +45,22 @@ public class Pokemon implements Serializable{
         return url;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Pokemon{" + "nombre=" + nombre + ", numero=" + numero + ", tipo=" + tipo + ", url=" + url + '}';
